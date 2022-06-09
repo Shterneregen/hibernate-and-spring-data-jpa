@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Commit;
 import random.sdjpaintro.domain.Book;
 import random.sdjpaintro.repositories.BookRepository;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 // Minimum persistence context
 // Annotation for a JPA test that focuses only on JPA components.
 @DataJpaTest
+@ComponentScan(basePackages = "random.sdjpaintro.bootstrap")
 public class SpringBootJpaTestSlice {
 
     @Autowired
@@ -29,7 +31,7 @@ public class SpringBootJpaTestSlice {
     @Test
     void testJpaTestSplice() {
         long countBefore = bookRepository.count();
-        assertThat(countBefore).isZero();
+        assertThat(countBefore).isEqualTo(2);
 
         bookRepository.save(new Book("My Book", "123", "Self"));
 
@@ -42,6 +44,6 @@ public class SpringBootJpaTestSlice {
     @Test
     void testJpaTestSpliceTransaction() {
         long countBefore = bookRepository.count();
-        assertThat(countBefore).isEqualTo(1);
+        assertThat(countBefore).isEqualTo(3);
     }
 }
