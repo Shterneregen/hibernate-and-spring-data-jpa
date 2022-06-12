@@ -3,25 +3,24 @@ package random.sdjpaintro.bootstrap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import random.sdjpaintro.domain.Book;
 import random.sdjpaintro.repositories.BookRepository;
 
 @Slf4j
 @Component
+@Profile({"local", "default"})
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
     private final BookRepository bookRepository;
 
     @Override
     public void run(String... args) {
-        Book bookDDD = new Book("Domain Driven Design", "123", "Random");
-        Book savedDDD = bookRepository.save(bookDDD);
-        log.info("savedDDD: {}", savedDDD.getId());
+        bookRepository.deleteAll();
 
-        Book bookSIA = new Book("Spring In Action", "qqq", "o'reilly");
-        Book savedSIA = bookRepository.save(bookSIA);
-        log.info("savedSIA: {}", savedSIA.getId());
+        bookRepository.save(new Book("Domain Driven Design", "123", "Random"));
+        bookRepository.save(new Book("Spring In Action", "qqq", "o'reilly"));
 
         bookRepository.findAll().forEach(book -> log.info(book.toString()));
     }
