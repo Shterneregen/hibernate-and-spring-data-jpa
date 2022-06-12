@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Commit;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 // Annotation for a JPA test that focuses only on JPA components.
 @DataJpaTest
 @ComponentScan(basePackages = "random.sdjpaintro.bootstrap")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class SpringBootJpaTestSlice {
 
     @Autowired
