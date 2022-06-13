@@ -14,6 +14,11 @@ spring:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
     username: sa
     password: password
+  liquibase:
+    enabled: true
+    changeLog: classpath:db/changelog.xml
+  profiles:
+    active: local
 
 logging.level:
   org:

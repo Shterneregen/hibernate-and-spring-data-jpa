@@ -19,3 +19,8 @@ Solution: [Connection Java - MySQL : Public Key Retrieval is not allowed](https:
 > Right click the "user properties" area and choose "Add new property"  
 > Add two properties: "**useSSL**" and "**allowPublicKeyRetrieval**"  
 > Set their values to "**false**" and "**true**" by double clicking on the "value" column  
+
+---
+Liquibase:  
+[Getting Started with Liquibase and Gradle](https://docs.liquibase.com/tools-integrations/gradle/getting-started-liquibase-gradle.html)  
+[Liquibase Gradle Plugin](https://github.com/liquibase/liquibase-gradle-plugin)  
