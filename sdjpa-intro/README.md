@@ -1,12 +1,11 @@
-Course: [Hibernate and Spring Data JPA: Beginner to Guru](https://www.udemy.com/course/hibernate-and-spring-data-jpa-beginner-to-guru/)  
-Original repo: [Spring Data JPA - Introduction to Spring Data JPA](https://github.com/springframeworkguru/sdjpa-intro)  
+[MySQL Docker Image](https://hub.docker.com/_/mysql/)  
 
-
----
 Create MySQL in Docker container:
 ```shell
-docker run -d -p 3306:3306 --name test-mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:8
+docker run -d -p 3306:3306 --name test-mysql -e MYSQL_DATABASE=bookdb -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=bookadmin -e MYSQL_PASSWORD=password mysql:8
 ```
+
+Use `local` profile
 
 ---
 Problem: cannot connect to MySQL from Docker using DBeaver, error: _Public Key Retrieval is not allowed_
@@ -24,3 +23,7 @@ Solution: [Connection Java - MySQL : Public Key Retrieval is not allowed](https:
 Liquibase:  
 [Getting Started with Liquibase and Gradle](https://docs.liquibase.com/tools-integrations/gradle/getting-started-liquibase-gradle.html)  
 [Liquibase Gradle Plugin](https://github.com/liquibase/liquibase-gradle-plugin)  
+
+---
+Course: [Hibernate and Spring Data JPA: Beginner to Guru](https://www.udemy.com/course/hibernate-and-spring-data-jpa-beginner-to-guru/)  
+Original repo: [Spring Data JPA - Introduction to Spring Data JPA](https://github.com/springframeworkguru/sdjpa-intro)  

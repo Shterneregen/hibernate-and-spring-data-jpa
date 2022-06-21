@@ -16,7 +16,7 @@ spring:
     password: password
   liquibase:
     enabled: true
-    changeLog: classpath:db/changelog.xml
+    changeLog: classpath:db/changelog/baseline-changelog.xml
   profiles:
     active: local
 
