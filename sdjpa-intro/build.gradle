@@ -44,17 +44,6 @@ diff.dependsOn compileJava
 diffChangeLog.dependsOn compileJava
 generateChangelog.dependsOn compileJava
 
-liquibase {
-    activities {
-        main {
-            changeLogFile "src/main/resources/db/changelog.xml"
-            url "jdbc:mysql://127.0.0.1:3306/bookdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC"
-            username "bookadmin"
-            password "password"
-        }
-    }
-}
-
 tasks.named("test") {
     useJUnitPlatform()
 }
