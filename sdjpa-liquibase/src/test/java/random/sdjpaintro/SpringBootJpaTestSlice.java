@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Commit;
-import random.sdjpaintro.domain.Book;
-import random.sdjpaintro.repositories.BookRepository;
+import random.sdjpaliquibase.domain.Book;
+import random.sdjpaliquibase.repositories.BookRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

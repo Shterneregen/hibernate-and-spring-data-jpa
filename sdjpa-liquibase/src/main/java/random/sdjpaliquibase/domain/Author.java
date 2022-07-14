@@ -1,4 +1,4 @@
-package random.sdjpaintro.domain;
+package random.sdjpaliquibase.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
