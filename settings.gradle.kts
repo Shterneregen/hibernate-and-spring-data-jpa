@@ -10,5 +10,6 @@
 rootProject.name = "hibernate-and-spring-data-jpa"
 
 include(
-    ":sdjpa-liquibase"
+    ":sdjpa-liquibase",
+    ":sdjpa-flyway"
 )

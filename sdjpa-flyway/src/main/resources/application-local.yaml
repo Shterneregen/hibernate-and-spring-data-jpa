@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: bookuser
+    password: password
+    url: jdbc:mysql://127.0.0.1:3306/bookdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+  jpa:
+    database: mysql
+    hibernate.ddl-auto: validate
+  # This means V1__init_database.sql is always going to run
+#  sql.init.mode: always
+  flyway:
+    user: bookadmin
+    password: password
