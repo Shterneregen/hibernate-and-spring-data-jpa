@@ -1,11 +1,11 @@
-package random.sdjpaflyway;
+package random.sdjpaliquibase;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SdjpaFlywayApplication {
+public class LiquibaseIntroApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SdjpaFlywayApplication.class, args);
+        SpringApplication.run(LiquibaseIntroApplication.class, args);
     }
 }

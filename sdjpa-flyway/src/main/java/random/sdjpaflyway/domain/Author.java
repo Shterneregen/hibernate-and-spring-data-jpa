@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-//@Entity
+@Entity
 @NoArgsConstructor
 public class Author {
     @Id

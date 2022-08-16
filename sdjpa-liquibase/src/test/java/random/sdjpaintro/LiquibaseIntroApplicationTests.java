@@ -8,7 +8,7 @@ import random.sdjpaliquibase.repositories.BookRepository;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-class SdjpaIntroApplicationTests {
+class LiquibaseIntroApplicationTests {
 
     @Autowired
     private BookRepository bookRepository;
