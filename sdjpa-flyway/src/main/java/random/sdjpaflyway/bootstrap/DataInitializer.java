@@ -19,8 +19,8 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         bookRepository.deleteAll();
 
-        bookRepository.save(new Book("Domain Driven Design", "123", "Random"));
-        bookRepository.save(new Book("Spring In Action", "qqq", "o'reilly"));
+        bookRepository.save(new Book("Domain Driven Design", "123", "Random", null));
+        bookRepository.save(new Book("Spring In Action", "qqq", "o'reilly", null));
 
         bookRepository.findAll().forEach(book -> log.info(book.toString()));
     }
