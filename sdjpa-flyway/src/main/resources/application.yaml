@@ -17,6 +17,7 @@ spring:
   flyway:
     user: bookadmin
     password: password
+    locations: classpath:db/migration/common,classpath:db/migration/{vendor}
   profiles:
     active: local
 
