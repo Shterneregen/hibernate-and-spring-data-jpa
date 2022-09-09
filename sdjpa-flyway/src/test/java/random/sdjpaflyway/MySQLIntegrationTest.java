@@ -9,6 +9,9 @@ import org.springframework.test.context.ActiveProfiles;
 import random.sdjpaflyway.domain.AuthorUuid;
 import random.sdjpaflyway.domain.BookNatural;
 import random.sdjpaflyway.domain.BookUuid;
+import random.sdjpaflyway.domain.composite.AuthorComposite;
+import random.sdjpaflyway.domain.composite.NameId;
+import random.sdjpaflyway.repositories.AuthorCompositeRepository;
 import random.sdjpaflyway.repositories.AuthorUuidRepository;
 import random.sdjpaflyway.repositories.BookNaturalRepository;
 import random.sdjpaflyway.repositories.BookRepository;
@@ -31,6 +34,23 @@ class MySQLIntegrationTest {
     private BookUuidRepository bookUuidRepository;
     @Autowired
     private BookNaturalRepository bookNaturalRepository;
+    @Autowired
+    private AuthorCompositeRepository authorCompositeRepository;
+
+    @Test
+    void authorCompositeTest() {
+        NameId nameId = new NameId("John", "T");
+        AuthorComposite authorComposite = new AuthorComposite()
+                .setFirstName(nameId.getFirstName())
+                .setLastName(nameId.getLastName())
+                .setCountry("US");
+
+        AuthorComposite saved = authorCompositeRepository.save(authorComposite);
+        assertThat(saved).isNotNull();
+
+        AuthorComposite fetched = authorCompositeRepository.getReferenceById(nameId);
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void bookNaturalTest() {
