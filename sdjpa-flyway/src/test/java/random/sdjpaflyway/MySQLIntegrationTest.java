@@ -7,8 +7,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import random.sdjpaflyway.domain.AuthorUuid;
+import random.sdjpaflyway.domain.BookNatural;
 import random.sdjpaflyway.domain.BookUuid;
 import random.sdjpaflyway.repositories.AuthorUuidRepository;
+import random.sdjpaflyway.repositories.BookNaturalRepository;
 import random.sdjpaflyway.repositories.BookRepository;
 import random.sdjpaflyway.repositories.BookUuidRepository;
 
@@ -27,6 +29,17 @@ class MySQLIntegrationTest {
     private AuthorUuidRepository authorUuidRepository;
     @Autowired
     private BookUuidRepository bookUuidRepository;
+    @Autowired
+    private BookNaturalRepository bookNaturalRepository;
+
+    @Test
+    void bookNaturalTest() {
+        BookNatural bookNatural = new BookNatural().setTitle("My Book");
+        BookNatural saved = bookNaturalRepository.save(bookNatural);
+
+        BookNatural fetched = bookNaturalRepository.getReferenceById(saved.getTitle());
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void testBookUuid() {
