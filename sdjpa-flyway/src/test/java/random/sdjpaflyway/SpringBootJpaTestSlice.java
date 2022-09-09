@@ -19,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 // Minimum persistence context
 // Annotation for a JPA test that focuses only on JPA components.
 @DataJpaTest
-@ComponentScan(basePackages = "random.sdjpaintro.bootstrap")
+@ComponentScan(basePackages = "random.sdjpaflyway.bootstrap")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class SpringBootJpaTestSlice {
 

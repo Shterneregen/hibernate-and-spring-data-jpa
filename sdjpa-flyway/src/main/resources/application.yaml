@@ -19,7 +19,8 @@ spring:
     password: password
     locations: classpath:db/migration/common,classpath:db/migration/{vendor}
   profiles:
-    active: local
+    # H2 DB by default
+    active: default
 
 logging.level:
   org:
