@@ -10,8 +10,10 @@ import random.sdjpaflyway.domain.AuthorUuid;
 import random.sdjpaflyway.domain.BookNatural;
 import random.sdjpaflyway.domain.BookUuid;
 import random.sdjpaflyway.domain.composite.AuthorComposite;
+import random.sdjpaflyway.domain.composite.AuthorEmbedded;
 import random.sdjpaflyway.domain.composite.NameId;
 import random.sdjpaflyway.repositories.AuthorCompositeRepository;
+import random.sdjpaflyway.repositories.AuthorEmbeddedRepository;
 import random.sdjpaflyway.repositories.AuthorUuidRepository;
 import random.sdjpaflyway.repositories.BookNaturalRepository;
 import random.sdjpaflyway.repositories.BookRepository;
@@ -36,6 +38,20 @@ class MySQLIntegrationTest {
     private BookNaturalRepository bookNaturalRepository;
     @Autowired
     private AuthorCompositeRepository authorCompositeRepository;
+    @Autowired
+    private AuthorEmbeddedRepository authorEmbeddedRepository;
+
+    @Test
+    void authorEmbeddedTest() {
+        NameId nameId = new NameId("John", "T");
+        AuthorEmbedded authorEmbedded = new AuthorEmbedded().setNameId(nameId);
+
+        AuthorEmbedded saved = authorEmbeddedRepository.save(authorEmbedded);
+        assertThat(saved).isNotNull();
+
+        AuthorEmbedded fetched = authorEmbeddedRepository.getReferenceById(nameId);
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void authorCompositeTest() {
