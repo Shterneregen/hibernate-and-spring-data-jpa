@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: bookuser
+    password: password
+    url: jdbc:mysql://127.0.0.1:3306/bookdb2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa.hibernate.ddl-auto: validate
+  sql.init.mode: always
+
+  flyway:
+    user: bookadmin
+    password: password
