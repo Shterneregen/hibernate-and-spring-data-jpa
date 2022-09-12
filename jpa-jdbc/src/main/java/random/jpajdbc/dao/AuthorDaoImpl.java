@@ -34,35 +34,14 @@ public class AuthorDaoImpl implements AuthorDao {
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                Author author = new Author();
-                author.setId(id);
-                author.setFirstName(resultSet.getString("first_name"));
-                author.setLastName(resultSet.getString("last_name"));
-
-                return author;
+                return getAuthorFromRS(resultSet);
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-
-                // if (statement != null) {
-                //     statement.close();
-                // }
-
-                if (ps != null) {
-                    ps.close();
-                }
-
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                log.error(e.getMessage(), e);
-            }
+            close(resultSet);
+            close(ps);
+            close(connection);
         }
 
         return null;
@@ -82,33 +61,33 @@ public class AuthorDaoImpl implements AuthorDao {
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                Author author = new Author();
-                author.setId(resultSet.getLong("id"));
-                author.setFirstName(resultSet.getString("first_name"));
-                author.setLastName(resultSet.getString("last_name"));
-
-                return author;
+                return getAuthorFromRS(resultSet);
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-
-                if (ps != null) {
-                    ps.close();
-                }
-
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                log.error(e.getMessage(), e);
-            }
+            close(resultSet);
+            close(ps);
+            close(connection);
         }
 
         return null;
+    }
+
+    private static Author getAuthorFromRS(ResultSet resultSet) throws SQLException {
+        return new Author()
+                .setId(resultSet.getLong("id"))
+                .setFirstName(resultSet.getString("first_name"))
+                .setLastName(resultSet.getString("last_name"));
+    }
+
+    private void close(AutoCloseable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
     }
 }
