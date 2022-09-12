@@ -1,6 +1,7 @@
 package random.jpajdbc.dao;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import random.jpajdbc.domain.Author;
 
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AuthorDaoImpl implements AuthorDao {
@@ -17,9 +19,9 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author getById(Long id) {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
         try {
             connection = source.getConnection();
@@ -35,7 +37,23 @@ public class AuthorDaoImpl implements AuthorDao {
                 return author;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                log.error(e.getMessage(), e);
+            }
         }
 
         return null;
