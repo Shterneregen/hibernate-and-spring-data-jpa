@@ -3,7 +3,7 @@ package random.jpajdbc.dao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import random.jpajdbc.domain.Author;
+import random.jpajdbc.domain.Book;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,27 +17,23 @@ import static org.flywaydb.core.internal.util.IOUtils.close;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthorDaoImpl implements AuthorDao {
+public class BookDaoImpl implements BookDao {
     private final DataSource source;
 
     @Override
-    public Author getById(Long id) {
+    public Book getById(Long id) {
         Connection connection = null;
         PreparedStatement ps = null;
-        // Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             connection = source.getConnection();
-            // statement = connection.createStatement();
-            // resultSet = statement.executeQuery("SELECT * FROM author where id = " + id);
-
-            ps = connection.prepareStatement("SELECT * FROM author where id = ?");
+            ps = connection.prepareStatement("SELECT * FROM book where id = ?");
             ps.setLong(1, id);
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                return getAuthorFromRS(resultSet);
+                return getBookFromRS(resultSet);
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
@@ -51,20 +47,19 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public Author findAuthorByName(String firstName, String lastName) {
+    public Book findBookByTitle(String title) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
 
         try {
             connection = source.getConnection();
-            ps = connection.prepareStatement("SELECT * FROM author where first_name = ? and last_name = ?");
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
+            ps = connection.prepareStatement("SELECT * FROM book where title = ?");
+            ps.setString(1, title);
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                return getAuthorFromRS(resultSet);
+                return getBookFromRS(resultSet);
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
@@ -78,20 +73,21 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public Author saveNewAuthor(Author author) {
+    public Book saveNewBook(Book book) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
 
         try {
             connection = source.getConnection();
-            ps = connection.prepareStatement("INSERT INTO author (first_name, last_name) values (?, ?)");
-            ps.setString(1, author.getFirstName());
-            ps.setString(2, author.getLastName());
+            ps = connection.prepareStatement("INSERT INTO book (isbn, publisher, title, author_id) VALUES (?, ?, ?, ?)");
+            ps.setString(1, book.getIsbn());
+            ps.setString(2, book.getPublisher());
+            ps.setString(3, book.getTitle());
+            ps.setLong(4, book.getAuthorId());
             ps.execute();
 
             Statement statement = connection.createStatement();
-
             resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
 
             if (resultSet.next()) {
@@ -112,17 +108,19 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public Author updateAuthor(Author author) {
+    public Book updateBook(Book book) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
 
         try {
             connection = source.getConnection();
-            ps = connection.prepareStatement("UPDATE author set first_name = ?, last_name = ? where author.id = ?");
-            ps.setString(1, author.getFirstName());
-            ps.setString(2, author.getLastName());
-            ps.setLong(3, author.getId());
+            ps = connection.prepareStatement("UPDATE book set isbn = ?, publisher = ?, title = ?, author_id = ? where id = ?");
+            ps.setString(1, book.getIsbn());
+            ps.setString(2, book.getPublisher());
+            ps.setString(3, book.getTitle());
+            ps.setLong(4, book.getAuthorId());
+            ps.setLong(5, book.getId());
             ps.execute();
 
         } catch (SQLException e) {
@@ -133,31 +131,33 @@ public class AuthorDaoImpl implements AuthorDao {
             close(connection);
         }
 
-        return this.getById(author.getId());
+        return getById(book.getId());
     }
 
     @Override
-    public void deleteAuthorById(Long id) {
+    public void deleteBookById(Long id) {
         Connection connection = null;
         PreparedStatement ps = null;
 
         try {
             connection = source.getConnection();
-            ps = connection.prepareStatement("DELETE from author where id = ?");
+            ps = connection.prepareStatement("DELETE from book where id = ?");
             ps.setLong(1, id);
             ps.execute();
-        } catch (SQLException e) {
-            log.error(e.getMessage(), e);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         } finally {
             close(ps);
             close(connection);
         }
     }
 
-    private static Author getAuthorFromRS(ResultSet resultSet) throws SQLException {
-        return new Author()
-                .setId(resultSet.getLong("id"))
-                .setFirstName(resultSet.getString("first_name"))
-                .setLastName(resultSet.getString("last_name"));
+    private Book getBookFromRS(ResultSet resultSet) throws SQLException {
+        return new Book()
+                .setId(resultSet.getLong(1))
+                .setIsbn(resultSet.getString(2))
+                .setPublisher(resultSet.getString(3))
+                .setTitle(resultSet.getString(4))
+                .setAuthorId(resultSet.getLong(5));
     }
 }

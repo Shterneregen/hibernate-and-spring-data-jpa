@@ -8,18 +8,82 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpajdbc.dao.AuthorDao;
 import random.jpajdbc.dao.AuthorDaoImpl;
+import random.jpajdbc.dao.BookDao;
+import random.jpajdbc.dao.BookDaoImpl;
 import random.jpajdbc.domain.Author;
+import random.jpajdbc.domain.Book;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ActiveProfiles("local")
 @DataJpaTest
-@Import({AuthorDaoImpl.class})
+@Import({AuthorDaoImpl.class, BookDaoImpl.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AuthorDaoIntegrationTest {
 
     @Autowired
     private AuthorDao authorDao;
+    @Autowired
+    private BookDao bookDao;
+
+    @Test
+    void testDeleteBook() {
+        Book book = new Book()
+                .setIsbn("1234")
+                .setPublisher("Self")
+                .setTitle("my book")
+                .setAuthorId(3L);
+        Book saved = bookDao.saveNewBook(book);
+
+        bookDao.deleteBookById(saved.getId());
+
+        Book deleted = bookDao.getById(saved.getId());
+
+        assertThat(deleted).isNull();
+    }
+
+    @Test
+    void updateBookTest() {
+        Book book = new Book()
+                .setIsbn("1234")
+                .setPublisher("Self")
+                .setTitle("my book")
+                .setAuthorId(3L);
+        Book saved = bookDao.saveNewBook(book);
+
+        saved.setTitle("New Book");
+        bookDao.updateBook(saved);
+
+        Book fetched = bookDao.getById(saved.getId());
+
+        assertThat(fetched.getTitle()).isEqualTo("New Book");
+    }
+
+    @Test
+    void testSaveBook() {
+        Book book = new Book()
+                .setIsbn("1234")
+                .setPublisher("Self")
+                .setTitle("my book")
+                .setAuthorId(3L);
+        Book saved = bookDao.saveNewBook(book);
+
+        assertThat(saved).isNotNull();
+    }
+
+    @Test
+    void testGetBookByName() {
+        Book book = bookDao.findBookByTitle("Clean Code");
+
+        assertThat(book).isNotNull();
+    }
+
+    @Test
+    void testGetBook() {
+        Book book = bookDao.getById(3L);
+
+        assertThat(book.getId()).isNotNull();
+    }
 
     @Test
     void testDeleteAuthor() {
