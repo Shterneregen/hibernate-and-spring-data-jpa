@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Getter
 @Setter
@@ -27,7 +28,8 @@ public class Book {
     private String title;
     private String isbn;
     private String publisher;
-    private Long authorId;
+    @Transient
+    private Author author;
 
     public Book(String title, String isbn, String publisher) {
         this.title = title;

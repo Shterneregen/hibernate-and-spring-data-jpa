@@ -19,6 +19,7 @@ import static org.flywaydb.core.internal.util.IOUtils.close;
 @RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
     private final DataSource source;
+    private final AuthorDao authorDao;
 
     @Override
     public Book getById(Long id) {
@@ -84,7 +85,13 @@ public class BookDaoImpl implements BookDao {
             ps.setString(1, book.getIsbn());
             ps.setString(2, book.getPublisher());
             ps.setString(3, book.getTitle());
-            ps.setLong(4, book.getAuthorId());
+
+            if (book.getAuthor() != null) {
+                ps.setLong(4, book.getAuthor().getId());
+            } else {
+                ps.setNull(4, -5);
+            }
+
             ps.execute();
 
             Statement statement = connection.createStatement();
@@ -119,7 +126,11 @@ public class BookDaoImpl implements BookDao {
             ps.setString(1, book.getIsbn());
             ps.setString(2, book.getPublisher());
             ps.setString(3, book.getTitle());
-            ps.setLong(4, book.getAuthorId());
+
+            if (book.getAuthor() != null) {
+                ps.setLong(4, book.getAuthor().getId());
+            }
+
             ps.setLong(5, book.getId());
             ps.execute();
 
@@ -158,6 +169,6 @@ public class BookDaoImpl implements BookDao {
                 .setIsbn(resultSet.getString(2))
                 .setPublisher(resultSet.getString(3))
                 .setTitle(resultSet.getString(4))
-                .setAuthorId(resultSet.getLong(5));
+                .setAuthor(authorDao.getById(resultSet.getLong(5)));
     }
 }

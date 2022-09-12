@@ -31,8 +31,7 @@ class AuthorDaoIntegrationTest {
         Book book = new Book()
                 .setIsbn("1234")
                 .setPublisher("Self")
-                .setTitle("my book")
-                .setAuthorId(3L);
+                .setTitle("my book");
         Book saved = bookDao.saveNewBook(book);
 
         bookDao.deleteBookById(saved.getId());
@@ -48,7 +47,8 @@ class AuthorDaoIntegrationTest {
                 .setIsbn("1234")
                 .setPublisher("Self")
                 .setTitle("my book")
-                .setAuthorId(3L);
+                .setAuthor(new Author().setId(3L));
+
         Book saved = bookDao.saveNewBook(book);
 
         saved.setTitle("New Book");
@@ -65,7 +65,7 @@ class AuthorDaoIntegrationTest {
                 .setIsbn("1234")
                 .setPublisher("Self")
                 .setTitle("my book")
-                .setAuthorId(3L);
+                .setAuthor(new Author().setId(3L));
         Book saved = bookDao.saveNewBook(book);
 
         assertThat(saved).isNotNull();
