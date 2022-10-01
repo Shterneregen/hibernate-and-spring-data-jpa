@@ -12,5 +12,6 @@ rootProject.name = "hibernate-and-spring-data-jpa"
 include(
     ":jpa-liquibase",
     ":jpa-flyway",
-    ":jpa-jdbc"
+    ":jpa-jdbc",
+    ":jpa-jdbc-template"
 )
