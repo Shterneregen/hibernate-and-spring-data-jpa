@@ -9,7 +9,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpajdbctemplate.dao.AuthorDao;
 import random.jpajdbctemplate.dao.AuthorDaoImpl;
+import random.jpajdbctemplate.dao.BookDao;
 import random.jpajdbctemplate.domain.Author;
+import random.jpajdbctemplate.domain.Book;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,6 +24,60 @@ public class DaoIntegrationTest {
 
     @Autowired
     private AuthorDao authorDao;
+    @Autowired
+    private BookDao bookDao;
+
+    @Test
+    void testDeleteBook() {
+        Book saved = bookDao.saveNewBook(new Book()
+                .setIsbn("1234")
+                .setPublisher("Self")
+                .setTitle("my book"));
+
+        bookDao.deleteBookById(saved.getId());
+
+        assertThrows(EmptyResultDataAccessException.class, () -> bookDao.getById(saved.getId()));
+    }
+
+    @Test
+    void updateBookTest() {
+        Book saved = bookDao.saveNewBook(new Book()
+                .setIsbn("1234")
+                .setPublisher("Self")
+                .setTitle("my book")
+                .setAuthorId(1L));
+
+        saved.setTitle("New Book");
+        bookDao.updateBook(saved);
+
+        Book fetched = bookDao.getById(saved.getId());
+
+        assertThat(fetched.getTitle()).isEqualTo("New Book");
+    }
+
+    @Test
+    void testSaveBook() {
+        Book saved = bookDao.saveNewBook(new Book()
+                .setIsbn("1234")
+                .setPublisher("Self")
+                .setTitle("my book")
+                .setAuthorId(1L));
+
+        assertThat(saved).isNotNull();
+    }
+
+    @Test
+    void testGetBookByName() {
+        Book book = bookDao.findBookByTitle("Clean Code");
+        assertThat(book).isNotNull();
+    }
+
+    @Test
+    void testGetBook() {
+        Book book = bookDao.getById(3L);
+        assertThat(book.getId()).isNotNull();
+    }
+
 
     @Test
     void testDeleteAuthor() {
