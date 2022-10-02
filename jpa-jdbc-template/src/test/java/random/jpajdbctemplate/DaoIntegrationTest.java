@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpajdbctemplate.dao.AuthorDao;
 import random.jpajdbctemplate.dao.AuthorDaoImpl;
 import random.jpajdbctemplate.domain.Author;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -31,9 +33,7 @@ public class DaoIntegrationTest {
 
         authorDao.deleteAuthorById(saved.getId());
 
-        Author deleted = authorDao.getById(saved.getId());
-
-        assertThat(deleted).isNull();
+        assertThrows(EmptyResultDataAccessException.class, () -> authorDao.getById(saved.getId()));
     }
 
     @Test
@@ -54,9 +54,11 @@ public class DaoIntegrationTest {
     void testInsertAuthor() {
         Author author = new Author();
         author.setFirstName("john");
-        author.setLastName("t");
+        author.setLastName("t222");
 
         Author saved = authorDao.saveNewAuthor(author);
+
+        System.out.println("New Id is: " + saved.getId());
 
         assertThat(saved).isNotNull();
     }
