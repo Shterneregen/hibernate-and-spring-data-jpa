@@ -20,4 +20,6 @@ public interface BookDao {
     void deleteBookById(Long id);
 
     List<Book> findAll();
+
+    Book findBookByTitleNative(String title);
 }
