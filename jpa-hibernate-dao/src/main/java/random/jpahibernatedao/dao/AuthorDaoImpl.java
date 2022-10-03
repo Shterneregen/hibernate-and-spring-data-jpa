@@ -6,12 +6,29 @@ import random.jpahibernatedao.domain.Author;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
 public class AuthorDaoImpl implements AuthorDao {
     private final EntityManagerFactory emf;
+
+    @Override
+    public List<Author> listAuthorByLastNameLike(String lastName) {
+        EntityManager em = getEntityManager();
+
+        try {
+            Query query = em.createQuery("SELECT a from Author a where a.lastName like :last_name");
+            query.setParameter("last_name", lastName + "%");
+            List<Author> authors = query.getResultList();
+
+            return authors;
+        } finally {
+            em.close();
+        }
+    }
 
     @Override
     public Author getById(Long id) {

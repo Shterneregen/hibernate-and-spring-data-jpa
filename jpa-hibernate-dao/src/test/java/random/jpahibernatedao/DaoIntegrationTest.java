@@ -12,6 +12,8 @@ import random.jpahibernatedao.dao.BookDao;
 import random.jpahibernatedao.domain.Author;
 import random.jpahibernatedao.domain.Book;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ActiveProfiles("local")
@@ -23,6 +25,14 @@ public class DaoIntegrationTest {
     private AuthorDao authorDao;
     @Autowired
     private BookDao bookDao;
+
+    @Test
+    void testListAuthorByLastNameLike() {
+        List<Author> authors = authorDao.listAuthorByLastNameLike("Wall");
+
+        assertThat(authors).isNotNull();
+        assertThat(authors.size()).isGreaterThan(0);
+    }
 
     @Test
     void testDeleteBook() {
