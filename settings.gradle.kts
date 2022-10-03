@@ -13,5 +13,6 @@ include(
     ":jpa-liquibase",
     ":jpa-flyway",
     ":jpa-jdbc",
-    ":jpa-jdbc-template"
+    ":jpa-jdbc-template",
+    ":jpa-hibernate-dao"
 )
