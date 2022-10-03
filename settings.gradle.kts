@@ -14,5 +14,6 @@ include(
     ":jpa-flyway",
     ":jpa-jdbc",
     ":jpa-jdbc-template",
-    ":jpa-hibernate-dao"
+    ":jpa-hibernate-dao",
+    ":jpa-spring-data-jpa"
 )
