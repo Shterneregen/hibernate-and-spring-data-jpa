@@ -6,12 +6,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpaspringdatajpa.dao.AuthorDao;
 import random.jpaspringdatajpa.dao.AuthorDaoImpl;
 import random.jpaspringdatajpa.domain.Author;
+
+import javax.persistence.EntityNotFoundException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -139,6 +140,13 @@ public class DaoIntegrationTest {
         Author author = authorDao.findAuthorByName("Craig", "Walls");
 
         assertThat(author).isNotNull();
+    }
+
+    @Test
+    void testGetAuthorByNameNotFound() {
+        assertThrows(EntityNotFoundException.class, () -> {
+            Author author = authorDao.findAuthorByName("foo", "bar");
+        });
     }
 
     @Test
