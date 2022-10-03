@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpaspringdatajpa.dao.AuthorDao;
 import random.jpaspringdatajpa.dao.AuthorDaoImpl;
@@ -103,7 +104,7 @@ public class DaoIntegrationTest {
 
         authorDao.deleteAuthorById(saved.getId());
 
-        assertThrows(EmptyResultDataAccessException.class, () -> {
+        assertThrows(JpaObjectRetrievalFailureException.class, () -> {
             Author deleted = authorDao.getById(saved.getId());
         });
 
