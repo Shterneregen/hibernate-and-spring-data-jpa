@@ -1,18 +1,31 @@
 package random.jpahibernatedao.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import random.jpahibernatedao.domain.Author;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+
+@RequiredArgsConstructor
 @Component
 public class AuthorDaoImpl implements AuthorDao {
+    private final EntityManagerFactory emf;
+
     @Override
     public Author getById(Long id) {
-        return null;
+        return getEntityManager().find(Author.class, id);
     }
 
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
-        return null;
+        TypedQuery<Author> query = getEntityManager().createQuery("SELECT a FROM Author a " +
+                "WHERE a.firstName = :first_name and a.lastName = :last_name", Author.class);
+        query.setParameter("first_name", firstName);
+        query.setParameter("last_name", lastName);
+
+        return query.getSingleResult();
     }
 
     @Override
@@ -28,5 +41,9 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void deleteAuthorById(Long id) {
 
+    }
+
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
     }
 }
