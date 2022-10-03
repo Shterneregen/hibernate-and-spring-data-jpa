@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpahibernatedao.dao.AuthorDao;
 import random.jpahibernatedao.dao.AuthorDaoImpl;
 import random.jpahibernatedao.domain.Author;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -101,10 +99,8 @@ public class DaoIntegrationTest {
 
         authorDao.deleteAuthorById(saved.getId());
 
-        assertThrows(EmptyResultDataAccessException.class, () -> {
-            Author deleted = authorDao.getById(saved.getId());
-        });
-
+        Author deleted = authorDao.getById(saved.getId());
+        assertThat(deleted).isNull();
     }
 
     @Test
@@ -129,6 +125,7 @@ public class DaoIntegrationTest {
         Author saved = authorDao.saveNewAuthor(author);
 
         assertThat(saved).isNotNull();
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Test
