@@ -9,6 +9,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpaspringdatajpa.repositories.BookRepository;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,7 +22,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BookRepositoryTest {
 
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
+
+    @Test
+    void testBookStream() {
+        AtomicInteger count = new AtomicInteger();
+
+        bookRepository.findAllByTitleNotNull().forEach(book -> count.incrementAndGet());
+
+        assertThat(count.get()).isGreaterThan(5);
+    }
 
     @Test
     void testEmptyResultException() {
