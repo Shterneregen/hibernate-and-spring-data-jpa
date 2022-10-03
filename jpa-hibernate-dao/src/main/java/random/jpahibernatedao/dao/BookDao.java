@@ -2,6 +2,8 @@ package random.jpahibernatedao.dao;
 
 import random.jpahibernatedao.domain.Book;
 
+import java.util.List;
+
 public interface BookDao {
     Book findByISBN(String isbn);
 
@@ -14,4 +16,6 @@ public interface BookDao {
     Book updateBook(Book book);
 
     void deleteBookById(Long id);
+
+    List<Book> findAll();
 }

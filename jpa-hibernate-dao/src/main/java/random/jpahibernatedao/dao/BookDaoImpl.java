@@ -7,6 +7,7 @@ import random.jpahibernatedao.domain.Book;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -37,14 +38,31 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> findAll() {
+        EntityManager em = getEntityManager();
+
+        try {
+            TypedQuery<Book> query = em.createNamedQuery("find_all_books", Book.class);
+
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
     public Book findBookByTitle(String title) {
         EntityManager em = getEntityManager();
-        TypedQuery<Book> query = em
-                .createQuery("SELECT b FROM Book b where b.title = :title", Book.class);
-        query.setParameter("title", title);
-        Book book = query.getSingleResult();
-        em.close();
-        return book;
+        try {
+//            TypedQuery<Book> query = em
+//                    .createQuery("SELECT b FROM Book b where b.title = :title", Book.class);
+            TypedQuery<Book> query = em.createNamedQuery("find_by_title", Book.class);
+            query.setParameter("title", title);
+            Book book = query.getSingleResult();
+            return book;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
