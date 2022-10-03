@@ -58,6 +58,13 @@ public class DaoIntegrationTest {
     }
 
     @Test
+    void testGetBookByTitleCriteria() {
+        Book book = bookDao.findBookByTitleCriteria("Clean Code");
+
+        assertThat(book).isNotNull();
+    }
+
+    @Test
     void testFindBookByISBN() {
         Book book = new Book();
         book.setIsbn("1234" + RandomString.make());
