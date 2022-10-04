@@ -1,6 +1,7 @@
 package random.jpaspringdatajpa.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import random.jpaspringdatajpa.domain.Book;
 
@@ -9,6 +10,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookDaoJDBCTemplate implements BookDao {
     private final JdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<Book> findAllBooks(Pageable pageable) {
+        return jdbcTemplate.query("SELECT * FROM book limit ? offset ?", getBookMapper(),
+                pageable.getPageSize(), pageable.getOffset());
+    }
 
     @Override
     public List<Book> findAllBooks(int pageSize, int offset) {

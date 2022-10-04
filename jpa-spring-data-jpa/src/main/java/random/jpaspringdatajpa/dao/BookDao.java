@@ -1,10 +1,13 @@
 package random.jpaspringdatajpa.dao;
 
+import org.springframework.data.domain.Pageable;
 import random.jpaspringdatajpa.domain.Book;
 
 import java.util.List;
 
 public interface BookDao {
+
+    List<Book> findAllBooks(Pageable pageable);
 
     List<Book> findAllBooks(int pageSize, int offset);
 

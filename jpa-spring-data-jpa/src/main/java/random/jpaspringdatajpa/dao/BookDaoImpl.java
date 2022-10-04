@@ -1,6 +1,7 @@
 package random.jpaspringdatajpa.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import random.jpaspringdatajpa.domain.Book;
@@ -14,6 +15,11 @@ import java.util.List;
 public class BookDaoImpl implements BookDao {
 
     private final BookRepository bookRepository;
+
+    @Override
+    public List<Book> findAllBooks(Pageable pageable) {
+        return null;
+    }
 
     @Override
     public List<Book> findAllBooks(int pageSize, int offset) {
