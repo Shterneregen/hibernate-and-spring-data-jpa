@@ -13,6 +13,8 @@ import random.jpaspringdatajpa.dao.BookDao;
 import random.jpaspringdatajpa.dao.BookDaoJDBCTemplate;
 import random.jpaspringdatajpa.domain.Book;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,6 +32,14 @@ class BookDaoJDBCTemplateTest {
     @BeforeEach
     void setUp() {
         bookDao = new BookDaoJDBCTemplate(jdbcTemplate);
+    }
+
+    @Test
+    void testFindAllBooks() {
+        List<Book> books = bookDao.findAllBooks();
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(5);
     }
 
     @Test

@@ -7,12 +7,18 @@ import random.jpaspringdatajpa.domain.Book;
 import random.jpaspringdatajpa.repositories.BookRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
 public class BookDaoImpl implements BookDao {
 
     private final BookRepository bookRepository;
+
+    @Override
+    public List<Book> findAllBooks() {
+        return bookRepository.findAll();
+    }
 
     @Override
     public Book getById(Long id) {

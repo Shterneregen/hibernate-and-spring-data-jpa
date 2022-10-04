@@ -1,13 +1,18 @@
 package random.jpaspringdatajpa.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import random.jpaspringdatajpa.domain.Book;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 public class BookDaoJDBCTemplate implements BookDao {
     private final JdbcTemplate jdbcTemplate;
 
-    public BookDaoJDBCTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    @Override
+    public List<Book> findAllBooks() {
+        return jdbcTemplate.query("SELECT * FROM book", getBookMapper());
     }
 
     @Override
@@ -43,7 +48,7 @@ public class BookDaoJDBCTemplate implements BookDao {
         jdbcTemplate.update("DELETE from book where id = ?", id);
     }
 
-    private BookMapper getBookMapper(){
+    private BookMapper getBookMapper() {
         return new BookMapper();
     }
 }

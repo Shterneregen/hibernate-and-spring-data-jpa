@@ -2,7 +2,11 @@ package random.jpaspringdatajpa.dao;
 
 import random.jpaspringdatajpa.domain.Book;
 
+import java.util.List;
+
 public interface BookDao {
+
+    List<Book> findAllBooks();
 
     Book getById(Long id);
 
