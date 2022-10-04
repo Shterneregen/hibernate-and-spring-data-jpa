@@ -17,6 +17,11 @@ public class BookDaoImpl implements BookDao {
     private final BookRepository bookRepository;
 
     @Override
+    public List<Book> findAllBooksSortByTitle(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public List<Book> findAllBooks(Pageable pageable) {
         return null;
     }
