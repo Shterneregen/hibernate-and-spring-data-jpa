@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ActiveProfiles("local")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ComponentScan(basePackages = {"guru.springframework.jdbc.dao"})
+@ComponentScan(basePackages = {"random.jpaspringdatajpa.dao"})
 class BookDaoJDBCTemplateTest {
 
     @Autowired

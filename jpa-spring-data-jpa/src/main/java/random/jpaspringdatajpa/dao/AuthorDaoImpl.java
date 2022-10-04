@@ -1,17 +1,24 @@
 package random.jpaspringdatajpa.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import random.jpaspringdatajpa.domain.Author;
 import random.jpaspringdatajpa.repositories.AuthorRepository;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
 public class AuthorDaoImpl implements AuthorDao {
     private final AuthorRepository authorRepository;
+
+    @Override
+    public List<Author> findAllAuthorsByLastName(String lastname, Pageable pageable) {
+        return null;
+    }
 
     @Override
     public Author getById(Long id) {
