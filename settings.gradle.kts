@@ -15,5 +15,6 @@ include(
     ":jpa-jdbc",
     ":jpa-jdbc-template",
     ":jpa-hibernate-dao",
-    ":jpa-spring-data-jpa"
+    ":jpa-spring-data-jpa",
+    ":jpa-order-service"
 )
