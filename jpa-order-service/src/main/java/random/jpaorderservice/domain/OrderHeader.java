@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 @AttributeOverrides({
         @AttributeOverride(name = "shippingAddress.address", column = @Column(name = "shipping_address")),
         @AttributeOverride(name = "shippingAddress.city", column = @Column(name = "shipping_city")),
@@ -22,10 +22,10 @@ import javax.persistence.*;
 @Entity
 public class OrderHeader extends BaseEntity {
     private String customer;
-    @EqualsAndHashCode.Include
     @Embedded
     private Address shippingAddress;
-    @EqualsAndHashCode.Include
     @Embedded
     private Address billToAddress;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 }
