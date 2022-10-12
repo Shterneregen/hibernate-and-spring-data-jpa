@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +29,6 @@ public class OrderHeader extends BaseEntity {
     private Address billToAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+    @OneToMany(mappedBy = "orderHeader")
+    private Set<OrderLine> orderLines;
 }
