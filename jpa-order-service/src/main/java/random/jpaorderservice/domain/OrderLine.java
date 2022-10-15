@@ -14,4 +14,6 @@ public class OrderLine extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @ManyToOne
     private OrderHeader orderHeader;
+    @ManyToOne
+    private Product product;
 }
