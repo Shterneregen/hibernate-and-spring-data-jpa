@@ -22,8 +22,6 @@ class OrderHeaderRepositoryTest {
     private ProductRepository productRepository;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private OrderApprovalRepository orderApprovalRepository;
 
     private Product product;
 
@@ -52,8 +50,8 @@ class OrderHeaderRepositoryTest {
 
         OrderApproval approval = new OrderApproval();
         approval.setApprovedBy("me");
-        OrderApproval savedApproval = orderApprovalRepository.save(approval);
-        orderHeader.setOrderApproval(savedApproval);
+
+        orderHeader.setOrderApproval(approval);
 
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
