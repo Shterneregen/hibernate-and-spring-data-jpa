@@ -3,6 +3,8 @@ package random.jpaorderservice.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,9 +33,11 @@ public class OrderHeader extends BaseEntity {
     private Address billToAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<OrderLine> orderLines;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "orderHeader")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Fetch(FetchMode.SELECT)
     private OrderApproval orderApproval;
 
     public void setOrderApproval(OrderApproval orderApproval) {
