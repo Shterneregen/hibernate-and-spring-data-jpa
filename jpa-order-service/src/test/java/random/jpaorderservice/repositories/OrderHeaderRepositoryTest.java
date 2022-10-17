@@ -8,8 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import random.jpaorderservice.domain.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import javax.persistence.EntityNotFoundException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -87,5 +88,30 @@ class OrderHeaderRepositoryTest {
         assertNotNull(fetchedOrder.getId());
         assertNotNull(fetchedOrder.getCreatedDate());
         assertNotNull(fetchedOrder.getLastModifiedDate());
+    }
+
+    @Test
+    void testDeleteCascade() {
+        OrderHeader orderHeader = new OrderHeader();
+        Customer customer = new Customer();
+        customer.setCustomerName("new Customer");
+        orderHeader.setCustomer(customerRepository.save(customer));
+
+        OrderLine orderLine = new OrderLine();
+        orderLine.setQuantityOrdered(3);
+        orderLine.setProduct(product);
+
+        orderHeader.addOrderLine(orderLine);
+        OrderHeader savedOrder = orderHeaderRepository.saveAndFlush(orderHeader);
+
+        System.out.println("order saved and flushed");
+
+        orderHeaderRepository.deleteById(savedOrder.getId());
+        orderHeaderRepository.flush();
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            OrderHeader fetchedOrder = orderHeaderRepository.getById(savedOrder.getId());
+            assertNull(fetchedOrder);
+        });
     }
 }
