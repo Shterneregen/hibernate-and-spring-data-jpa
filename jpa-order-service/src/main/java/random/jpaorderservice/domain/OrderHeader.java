@@ -23,7 +23,7 @@ import java.util.Set;
 })
 @Entity
 public class OrderHeader extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
     @Embedded
     private Address shippingAddress;

@@ -33,6 +33,16 @@ public class DataLoadTest {
     @Autowired
     ProductRepository productRepository;
 
+    // Only to watching Hibernate generated calls
+    @Test
+    void testLazyVsEager() {
+        OrderHeader orderHeader = orderHeaderRepository.getById(5L);
+
+        System.out.println("Order Id is: " + orderHeader.getId());
+        // For lazy fields, Hibernate calls DB only in case calling the field
+        System.out.println("Customer Name is: " + orderHeader.getCustomer().getCustomerName());
+    }
+
     @Disabled
     @Rollback(value = false)
     @Test
