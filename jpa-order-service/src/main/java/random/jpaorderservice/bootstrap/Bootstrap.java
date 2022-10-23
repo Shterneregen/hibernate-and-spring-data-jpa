@@ -4,16 +4,34 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import random.jpaorderservice.domain.Customer;
+import random.jpaorderservice.domain.Product;
+import random.jpaorderservice.domain.ProductStatus;
 import random.jpaorderservice.repositories.CustomerRepository;
+import random.jpaorderservice.services.ProductService;
 
 @RequiredArgsConstructor
 @Component
 public class Bootstrap implements CommandLineRunner {
     private final BootstrapOrderService bootstrapOrderService;
     private final CustomerRepository customerRepository;
+    private final ProductService productService;
+
+    private void updateProduct() {
+        Product product = new Product();
+        product.setDescription("My Product");
+        product.setProductStatus(ProductStatus.NEW);
+
+        Product savedProduct = productService.saveProduct(product);
+
+        Product savedProduct2 = productService.updateQOH(savedProduct.getId(), 25);
+
+        System.out.println("Updated Qty: " + savedProduct2.getQuantityOnHand());
+    }
 
     @Override
     public void run(String... args) {
+        updateProduct();
+
         bootstrapOrderService.readOrderData();
 
         Customer customer = new Customer();
