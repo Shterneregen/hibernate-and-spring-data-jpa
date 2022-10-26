@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ public class UserMeta {
     @Column(name = "umeta_id")
     private Long id;
     private Long userId;
+    @Size(max = 255)
     private String metaKey;
 
     @Lob
