@@ -1,0 +1,1 @@
+Original: [Spring Data JPA Wordpress](https://github.com/springframeworkguru/sdjpa-wp)
