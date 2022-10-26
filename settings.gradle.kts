@@ -17,5 +17,6 @@ include(
     ":jpa-hibernate-dao",
     ":jpa-spring-data-jpa",
     ":jpa-order-service",
-    ":jpa-inheritance"
+    ":jpa-inheritance",
+    ":jpa-wp"
 )
