@@ -18,5 +18,6 @@ include(
     ":jpa-spring-data-jpa",
     ":jpa-order-service",
     ":jpa-inheritance",
-    ":jpa-wp"
+    ":jpa-wp",
+    ":jpa-credit-card"
 )
