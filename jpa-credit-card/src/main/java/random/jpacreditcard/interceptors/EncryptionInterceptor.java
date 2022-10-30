@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class EncryptionInterceptor extends EmptyInterceptor {
     private final EncryptionService encryptionService;
 
