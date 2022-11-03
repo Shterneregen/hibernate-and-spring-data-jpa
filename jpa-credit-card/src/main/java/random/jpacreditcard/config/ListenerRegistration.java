@@ -13,7 +13,7 @@ import random.jpacreditcard.listeners.PreInsertListener;
 import random.jpacreditcard.listeners.PreUpdateListener;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class ListenerRegistration implements BeanPostProcessor {
     private final PostLoadListener postLoadListener;
     private final PreInsertListener preInsertListener;

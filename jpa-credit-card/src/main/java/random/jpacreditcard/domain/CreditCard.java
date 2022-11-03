@@ -4,14 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import random.jpacreditcard.interceptors.EncryptedString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@EntityListeners(CreditCardJPACallback.class)
 public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +18,9 @@ public class CreditCard {
     private String creditCardNumber;
     private String cvv;
     private String expirationDate;
+
+    @PrePersist
+    public void prePersistCallback(){
+        System.out.println("JPA PrePersist Callback was called");
+    }
 }
