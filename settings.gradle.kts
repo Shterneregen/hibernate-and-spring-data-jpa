@@ -19,5 +19,6 @@ include(
     ":jpa-order-service",
     ":jpa-inheritance",
     ":jpa-wp",
-    ":jpa-credit-card"
+    ":jpa-credit-card",
+    ":jpa-multi-db"
 )
