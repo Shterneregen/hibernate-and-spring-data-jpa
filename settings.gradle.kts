@@ -20,5 +20,6 @@ include(
     ":jpa-inheritance",
     ":jpa-wp",
     ":jpa-credit-card",
-    ":jpa-multi-db"
+    ":jpa-multi-db",
+    ":jpa-spring-data-rest"
 )
